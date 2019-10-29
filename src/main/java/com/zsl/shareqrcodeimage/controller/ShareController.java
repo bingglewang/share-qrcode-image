@@ -29,4 +29,16 @@ public class ShareController {
         return CommonResult.success(result,"海报生成成功");
     }
 
+    @PostMapping("detail")
+    private CommonResult shareGoodsDetail(@RequestBody ShareDto shareDto){
+        String result = shareService.detailShareImage(shareDto.getPrice(),shareDto.getTitle(),shareDto.getBackUrl(),shareDto.getContent(),shareDto.getShareId()+".png",shareDto.getWidth(),shareDto.getHeight(),shareDto.getMarginRight(),shareDto.getMarginBottom());
+        return CommonResult.success(result,"海报生成成功");
+    }
+
+    @PostMapping("merge")
+    private CommonResult mergeImageQrcode(@RequestBody ShareDto shareDto){
+        String result = shareService.mergeImageQrcode(shareDto.getBackUrl(),shareDto.getContent(),shareDto.getShareId()+".png",shareDto.getWidth(),shareDto.getHeight(),shareDto.getMarginRight(),shareDto.getMarginBottom());
+        return CommonResult.success(result,"海报生成成功");
+    }
+
 }

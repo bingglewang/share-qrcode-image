@@ -8,12 +8,33 @@ package com.zsl.shareqrcodeimage.dto;
  * @Version 1.0
  **/
 public class ShareDto {
+    private String price;
+    private String title; //分享标题
+    private String backUrl; //背景图片地址
     private String content;//二维码内容
     private String shareId;//用户shareid
     private int width;
     private int height;
     private int marginRight;
     private int marginBottom;
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public int getMarginRight() {
         return marginRight;
@@ -49,6 +70,14 @@ public class ShareDto {
 
     public String getContent() {
         return content;
+    }
+
+    public String getBackUrl() {
+        return backUrl;
+    }
+
+    public void setBackUrl(String backUrl) {
+        this.backUrl = backUrl;
     }
 
     public void setContent(String content) {

@@ -17,4 +17,10 @@ public interface ShareService {
      */
     String createShareImage(String text,String qrCodeName,int width,int height,int marginRight,int marginBottom);
 
+
+    String mergeImageQrcode(String backUrl,String text,String qrCodeName,int width,int height,int marginRight,int marginBottom);
+
+
+    String detailShareImage(String price,String title,String backUrl, String text,String qrCodeName,int width,int height,int marginRight,int marginBottom);
+
 }
