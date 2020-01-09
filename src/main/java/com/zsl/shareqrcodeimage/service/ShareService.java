@@ -23,4 +23,5 @@ public interface ShareService {
 
     String detailShareImage(String price,String title,String backUrl, String text,String qrCodeName,int width,int height,int marginRight,int marginBottom);
 
+    String mergeImageTree(String price,String title,String backUrl,String srcUrl,String qrCodeName);
 }

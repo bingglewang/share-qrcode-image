@@ -41,4 +41,10 @@ public class ShareController {
         return CommonResult.success(result,"海报生成成功");
     }
 
+    @PostMapping("tree")
+    private CommonResult mergeImageTree(@RequestBody ShareDto shareDto){
+        String result = shareService.mergeImageTree(shareDto.getPrice(),shareDto.getTitle(),shareDto.getBackUrl(),shareDto.getContent(),shareDto.getShareId()+".png");
+        return CommonResult.success(result,"海报生成成功");
+    }
+
 }

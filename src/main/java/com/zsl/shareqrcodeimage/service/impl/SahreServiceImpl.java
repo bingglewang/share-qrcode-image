@@ -137,4 +137,34 @@ public class SahreServiceImpl implements ShareService {
         }
         return haibaoPath;
     }
+
+    @Override
+    public String mergeImageTree(String price, String title, String backUrl, String srcUrl,String qrCodeName) {
+        File file = null;
+        File file1 = null;
+        try {
+            String url = backUrl;
+            String urlSrc = srcUrl;
+            String path = FilePathUtils.getTempFilePath() + File.separator;
+            String res = DownloadURLFile.downloadFromUrl(url, path);
+            String res1 = DownloadURLFile.downloadFromUrl(urlSrc, path);
+            String name = DownloadURLFile.getFileNameFromUrl(url);
+            String name1 = DownloadURLFile.getFileNameFromUrl(urlSrc);
+            file = new File(path+name);
+            file1 = new File(path + name1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+        MatrixToImageWriter.mergeImage2(price,title,file.getPath(),file1.getPath(),qrCodePath,0,0);
+        String haibaoPath = HttpUtils.uploadImageToCos(qrCodePath,qrCodeName);
+
+        File file2 = new File(qrCodePath);
+        //如果存在则删除
+        if(file2.exists()){
+            file2.delete();
+        }
+        return haibaoPath;
+    }
 }
