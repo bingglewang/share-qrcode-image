@@ -184,7 +184,7 @@ public class MatrixToImageWriter {
             // 往画布上添加图片,并设置边距
 
             graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
-            graphics2d.drawImage(srcBufferedImage, x-100, y-90, 90, 90, null);
+            graphics2d.drawImage(srcBufferedImage, x-80, y-80, 60, 60, null);
             //graphics2d.drawString(title, 50, y + 80);
             int count =  drawString(graphics2d,font,title,20,y-100/2-15,300);
             graphics2d.setPaint(new Color(144,93,73));
