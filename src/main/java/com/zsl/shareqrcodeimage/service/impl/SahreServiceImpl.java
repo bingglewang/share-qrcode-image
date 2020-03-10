@@ -1,13 +1,12 @@
 package com.zsl.shareqrcodeimage.service.impl;
 
 import com.zsl.shareqrcodeimage.service.ShareService;
-import com.zsl.shareqrcodeimage.util.DownloadURLFile;
-import com.zsl.shareqrcodeimage.util.FilePathUtils;
-import com.zsl.shareqrcodeimage.util.HttpUtils;
-import com.zsl.shareqrcodeimage.util.MatrixToImageWriter;
+import com.zsl.shareqrcodeimage.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -164,6 +163,47 @@ public class SahreServiceImpl implements ShareService {
         //如果存在则删除
         if(file2.exists()){
             file2.delete();
+        }
+        return haibaoPath;
+    }
+
+
+    @Override
+    public String mergeImageTorch(String nickName,String urlSrc,  String dianZan, String title1, String title2,String productName,String productDesc,String qrCodeName) throws  Exception{
+
+        String changan = "长按保存图片";
+        String phone = "公司电话：020-3142 0284";
+        String weixin = "公司公众号：中追溯源";
+
+        File file3 = ResourceUtils.getFile("classpath:static/image/back3.png");
+        File file2 = ResourceUtils.getFile("classpath:static/image/back2.png");
+        File file4 = ResourceUtils.getFile("classpath:static/image/back4.png");
+
+        // http://avatar.csdn.net/3/1/7/1_qq_27292113.jpg?1488183229974
+        // 是头像地址
+        // 获取图片的流
+        BufferedImage url =
+                ImgToCircleUtil.getUrlByBufferedImage(urlSrc);
+
+        // 处理图片将其压缩成正方形的小图
+        BufferedImage convertImage = ImgToCircleUtil.scaleByPercentage(url, 100, 100);
+        // 裁剪成圆形 （传入的图像必须是正方形的 才会 圆形 如果是长方形的比例则会变成椭圆的）
+        convertImage = ImgToCircleUtil.convertCircular(url);
+        // 生成的图片位置
+        String imagePath = FilePathUtils.getTempFilePath() + File.separator + "touxiang.png";
+
+        ImageIO.write(convertImage, imagePath.substring(imagePath.lastIndexOf(".") + 1), new File(imagePath));
+
+
+        String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + qrCodeName;
+        MatrixToImageWriter.mergeImage3(file3.getPath(),imagePath , file2.getPath(), file4.getPath(), qrCodePath,nickName,dianZan,title1,title2,productName,productDesc,changan,phone,weixin);
+
+        String haibaoPath = HttpUtils.uploadImageToCos(qrCodePath,qrCodeName);
+
+        File fileDelete = new File(qrCodePath);
+        //如果存在则删除
+        if(fileDelete.exists()){
+            fileDelete.delete();
         }
         return haibaoPath;
     }

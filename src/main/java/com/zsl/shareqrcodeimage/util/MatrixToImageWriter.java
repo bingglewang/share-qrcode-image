@@ -201,7 +201,87 @@ public class MatrixToImageWriter {
 
 
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * 功能描述: <br>2
+     * 火炬315 海报生成
+     *
+     * @return
+     */
+    public static void mergeImage3(String backImage,String srcImage1,String srcImage2,String srcImage3,String targetImage,String nickaName,String dianZan,String title1,String title2,String productName,String productDesc,String changan,String phone,String weixin) {
+        try {
+            int offset = 0;
+            BufferedImage backBufferedImage = ImageIO.read(new File(backImage));
+            BufferedImage bufferSrcImage1 = ImageIO.read(new File(srcImage1));
+            BufferedImage bufferSrcImage2 = ImageIO.read(new File(srcImage2));
+            BufferedImage bufferSrcImage3 = ImageIO.read(new File(srcImage3));
+
+            int x = backBufferedImage.getWidth();
+            int y = backBufferedImage.getHeight();
+
+            // 输出图片宽度
+            int width =  x;
+            int height = y;
+            Font font = new Font("宋体", Font.BOLD, 14);
+            Font font1 = new Font("宋体", Font.BOLD, 32);
+            Font font2 = new Font("宋体", Font.PLAIN, 28);
+            BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
+            Color color = new Color(255, 255, 255);
+            graphics2d.setBackground(color);
+            graphics2d.setPaint(new Color(144,93,73));
+            graphics2d.setFont(font);
+            graphics2d.clearRect(0, 0, width, height);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            // 往画布上添加图片,并设置边距
+
+            //背景
+            graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
+            graphics2d.setPaint(new Color(255,255,255));
+            graphics2d.setFont(font1);
+           //标题 1
+            int titleCount1 =  drawString(graphics2d,font,title1, 80,270,300);
+            //标题 2
+            int titleCount2 =  drawString(graphics2d,font,title2, 80,270 + 50,300);
+            //头像
+            graphics2d.drawImage(bufferSrcImage1, x/2- bufferSrcImage1.getWidth()/2, 250 + 60 + 50, bufferSrcImage1.getWidth()-20, bufferSrcImage1.getHeight()-20, null);
+
+            //昵称
+           int nickLenth = fontToCenter(nickaName);
+            int nickCount =  drawString(graphics2d,font,nickaName,x/2- bufferSrcImage1.getWidth()/2 - nickLenth,270+bufferSrcImage1.getHeight() + 60 + 50,300);
+            //点赞
+            graphics2d.drawImage(bufferSrcImage3, x/2+ bufferSrcImage1.getWidth()/2 + 30, 250 + bufferSrcImage3.getHeight()/2 + 60 + 50,bufferSrcImage3.getWidth() - 15,bufferSrcImage3.getHeight() - 15, null);
+            int dianCount =  drawString(graphics2d,font,dianZan,x/2+ bufferSrcImage1.getWidth()/2 +bufferSrcImage1.getWidth()-44,250 + bufferSrcImage3.getHeight()+4 + 60 + 50,300);
+            //产品名称
+            int productLenth = fontToCenter(productName);
+            int productCount =  drawString(graphics2d,font,productName,x/2- bufferSrcImage1.getWidth()/2 - productLenth,270+bufferSrcImage1.getHeight() + 60 + 50 + 40,300);
+            // 产品介绍
+            graphics2d.setPaint(new Color(255,255,255));
+            graphics2d.setFont(font2);
+            int productDescCount =  drawString1(graphics2d,font,productDesc, 40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 + 50,320);
+
+            //下方二维码和公众号
+            graphics2d.drawImage(bufferSrcImage2,40,y- bufferSrcImage2.getWidth()*2-25,bufferSrcImage2.getWidth()*2,bufferSrcImage2.getHeight()*2,null);
+            graphics2d.setPaint(new Color(255,255,255));
+            graphics2d.setFont(font1);
+            drawString(graphics2d,font,changan,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20,300);
+
+            graphics2d.setPaint(new Color(255,255,255));
+            graphics2d.setFont(font2);
+            drawString(graphics2d,font,phone,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60,300);
+            drawString(graphics2d,font,weixin,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40,300);
+
+            graphics2d.dispose();
+            // 输出新图片
+            ImageIO.write(descBufferedImage, "png", new File(targetImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+   /* public static void main(String[] args) throws Exception {
         String text = "shabi"; // 二维码内容
         int width = 100; // 二维码图片宽度
         int height = 100; // 二维码图片高度
@@ -226,6 +306,60 @@ public class MatrixToImageWriter {
 
         String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + qrCodeName;
         mergeImage2(price, title, file.getPath(), file1.getPath(), qrCodePath, 250, 250);
+    }*/
+
+    public static void main(String[] args) throws Exception{
+        String qrCodeName = "new315.jpg";
+
+        String nickName = "对方正在输入。。。";
+        String dianZan = "123234";
+        String title1 = "统计截至：2019-12-23 14:23";
+        String title2 = "全国排名13名，广东省排名213名";
+        String productName = "产品名称：XXXXX产品";
+        String productDesc = "产品介绍：Lorem ip sum dolor sit amet,consectetur adipiscing elit,sed o eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ul-trices gravida.";
+
+        String changan = "长按保存图片";
+        String phone = "公司电话：020-3142 0284";
+        String weixin = "公司公众号：中追溯源";
+
+        File file3 = ResourceUtils.getFile("classpath:static/image/back3.png");
+        File file2 = ResourceUtils.getFile("classpath:static/image/back2.png");
+        File file4 = ResourceUtils.getFile("classpath:static/image/back4.png");
+
+
+        String urlSrc = "http://thirdwx.qlogo.cn/mmopen/vi_32/zrH3ibmkZB6sjwphQe5EQkArqxUPsenB78vLjSgQIcWrNhn99t4yCZPeDXU2gUHtibUgz31q9njJLR5sRlkwsHQQ/132";
+        // http://avatar.csdn.net/3/1/7/1_qq_27292113.jpg?1488183229974
+        // 是头像地址
+        // 获取图片的流
+        BufferedImage url =
+                ImgToCircleUtil.getUrlByBufferedImage(urlSrc);
+
+        // 处理图片将其压缩成正方形的小图
+        BufferedImage convertImage = ImgToCircleUtil.scaleByPercentage(url, 100, 100);
+        // 裁剪成圆形 （传入的图像必须是正方形的 才会 圆形 如果是长方形的比例则会变成椭圆的）
+        convertImage = ImgToCircleUtil.convertCircular(url);
+        // 生成的图片位置
+        String imagePath = FilePathUtils.getTempFilePath() + File.separator + "touxiang.png";
+
+        ImageIO.write(convertImage, imagePath.substring(imagePath.lastIndexOf(".") + 1), new File(imagePath));
+
+
+        String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + qrCodeName;
+        mergeImage3(file3.getPath(),imagePath , file2.getPath(), file4.getPath(), qrCodePath,nickName,dianZan,title1,title2,productName,productDesc,changan,phone,weixin);
+    }
+
+
+    public static int fontToCenter(String str){
+        int length = str.length();
+        int nickLenth = 0;
+        if(length > 3){
+            nickLenth = 10 * (length - 2);
+        }else if(length == 2){
+            nickLenth = -20;
+        }else if(length == 1){
+            nickLenth = -40;
+        }
+        return nickLenth;
     }
 
 
@@ -237,6 +371,39 @@ public class MatrixToImageWriter {
         label.setFont(font);
         FontMetrics metrics = label.getFontMetrics(label.getFont());
         int textH = metrics.getHeight();
+        int textW = metrics.stringWidth(label.getText()); //字符串的宽
+        String tempText = text;
+
+        while (textW > maxWidth) {
+            count++;
+            int n = textW / maxWidth;
+            int subPos = tempText.length() / n;
+            String drawText = tempText.substring(0, subPos);
+            int subTxtW = metrics.stringWidth(drawText);
+            while (subTxtW > maxWidth) {
+                subPos--;
+                drawText = tempText.substring(0, subPos);
+                subTxtW = metrics.stringWidth(drawText);
+            }
+            g.drawString(drawText, x, y);
+            y += textH;
+            textW = textW - subTxtW;
+            tempText = tempText.substring(subPos);
+        }
+
+        g.drawString(tempText, x, y);
+        return count;
+    }
+
+
+    public static int drawString1(Graphics2D g, Font font, String text, int x, int y, int maxWidth) {
+
+        int count = 0;
+
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        FontMetrics metrics = label.getFontMetrics(label.getFont());
+        int textH = metrics.getHeight()+12;
         int textW = metrics.stringWidth(label.getText()); //字符串的宽
         String tempText = text;
 
