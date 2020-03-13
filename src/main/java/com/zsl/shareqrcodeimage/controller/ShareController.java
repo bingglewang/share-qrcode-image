@@ -52,7 +52,7 @@ public class ShareController {
     private CommonResult mergeImageTorch(@RequestBody TorchDto torchDto){
         String result = null;
         try {
-            result = shareService.mergeImageTorch(torchDto.getNickName(),torchDto.getHeadImg(),torchDto.getPreferCount(),torchDto.getTitle1(),torchDto.getTitle2(),torchDto.getProductName(),torchDto.getProductDesc(),torchDto.getShareId()+".png");
+            result = shareService.mergeImageTorch(torchDto.getQrcode(),torchDto.getNickName(),torchDto.getHeadImg(),torchDto.getPreferCount(),torchDto.getTitle1(),torchDto.getTitle2(),torchDto.getProductName(),torchDto.getProductDesc(),torchDto.getShareId()+".png");
         } catch (Exception e) {
             e.printStackTrace();
             return CommonResult.success(result,"火炬海报生成失败");

@@ -38,5 +38,5 @@ public interface ShareService {
      * @return
      * @throws Exception
      */
-    String mergeImageTorch(String nickName,String urlSrc,  String dianZan, String title1, String title2,String productName,String productDesc,String qrCodeName) throws  Exception;
+    String mergeImageTorch(String qrcode,String nickName,String urlSrc,  String dianZan, String title1, String title2,String productName,String productDesc,String qrCodeName) throws  Exception;
 }

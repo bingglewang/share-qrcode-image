@@ -169,15 +169,29 @@ public class SahreServiceImpl implements ShareService {
 
 
     @Override
-    public String mergeImageTorch(String nickName,String urlSrc,  String dianZan, String title1, String title2,String productName,String productDesc,String qrCodeName) throws  Exception{
+    public String mergeImageTorch(String qrcode,String nickName,String urlSrc,  String dianZan, String title1, String title2,String productName,String productDesc,String qrCodeName) throws  Exception{
 
         String changan = "长按保存图片";
         String phone = "公司电话：020-3142 0284";
         String weixin = "公司公众号：中追溯源";
 
         File file3 = ResourceUtils.getFile("classpath:static/image/back3.png");
-        File file2 = ResourceUtils.getFile("classpath:static/image/back2.png");
+
+        // 获取图片的流
+        BufferedImage urlFile2 =
+                ImgToCircleUtil.getUrlByBufferedImage(qrcode);
+        // 处理图片将其压缩成正方形的小图
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 90, 90);
+        // 生成的图片位置
+        String imagePathFile2 = FilePathUtils.getTempFilePath() + File.separator + "qrcode.png";
+
+        ImageIO.write(convertImageFile2, imagePathFile2.substring(imagePathFile2.lastIndexOf(".") + 1), new File(imagePathFile2));
+
+
+        //File file2 = ResourceUtils.getFile("classpath:static/image/back2.png");
         File file4 = ResourceUtils.getFile("classpath:static/image/back4.png");
+
+
 
         // http://avatar.csdn.net/3/1/7/1_qq_27292113.jpg?1488183229974
         // 是头像地址
@@ -196,7 +210,7 @@ public class SahreServiceImpl implements ShareService {
 
 
         String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + qrCodeName;
-        MatrixToImageWriter.mergeImage3(file3.getPath(),imagePath , file2.getPath(), file4.getPath(), qrCodePath,nickName,dianZan,title1,title2,productName,productDesc,changan,phone,weixin);
+        MatrixToImageWriter.mergeImage3(file3.getPath(),imagePath , imagePathFile2, file4.getPath(), qrCodePath,nickName,dianZan,title1,title2,productName,productDesc,changan,phone,weixin);
 
         String haibaoPath = HttpUtils.uploadImageToCos(qrCodePath,qrCodeName);
 

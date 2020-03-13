@@ -1,6 +1,7 @@
 package com.zsl.shareqrcodeimage.dto;
 
 public class TorchDto {
+    private String qrcode; //二维码路径
     private String nickName;  // 昵称
     private String headImg;   //头像
     private String preferCount; //点赞数
@@ -9,6 +10,14 @@ public class TorchDto {
     private String productName; //产品名称
     private String productDesc; //产品描述
     private String shareId;//用户shareid
+
+    public String getQrcode() {
+        return qrcode;
+    }
+
+    public void setQrcode(String qrcode) {
+        this.qrcode = qrcode;
+    }
 
     public String getShareId() {
         return shareId;
