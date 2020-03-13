@@ -16,9 +16,9 @@ tengxunyun:
     # 所属区域
     bucket: ap-guangzhou
     # 存储桶名称
-    bucketName: zs-1256645015
+    bucketName: 315-1256645015
     # 访问路劲
-    path: https://zs-1256645015.cos.ap-guangzhou.myqcloud.com
+    path: https://315-1256645015.cos.ap-guangzhou.myqcloud.com
     # 路径前缀
     qianzui: trace
     # 存放服务器
