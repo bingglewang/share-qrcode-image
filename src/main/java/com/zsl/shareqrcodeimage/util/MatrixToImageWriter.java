@@ -269,8 +269,12 @@ public class MatrixToImageWriter {
 
             graphics2d.setPaint(new Color(255,255,255));
             graphics2d.setFont(font2);
-            drawString(graphics2d,font,phone,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
-            drawString(graphics2d,font,weixin,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
+            //drawString(graphics2d,font,phone,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
+            //drawString(graphics2d,font,weixin,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
+
+            drawString(graphics2d,font,"了解更多",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
+            drawString(graphics2d,font,"关注【中追溯源】公众号",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
+
 
             graphics2d.dispose();
             // 输出新图片
