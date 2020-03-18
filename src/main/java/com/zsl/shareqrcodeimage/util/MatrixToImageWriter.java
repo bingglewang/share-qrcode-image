@@ -223,7 +223,7 @@ public class MatrixToImageWriter {
             int height = y;
             Font font = new Font("宋体", Font.BOLD, 14);
             Font font1 = new Font("宋体", Font.BOLD, 32);
-            Font font2 = new Font("宋体", Font.PLAIN, 28);
+            Font font2 = new Font("宋体", Font.BOLD, 40);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(255, 255, 255);
@@ -243,37 +243,51 @@ public class MatrixToImageWriter {
            //标题 1
            // int titleCount1 =  drawString(graphics2d,font,title1, 80,270,300);
             //标题 2
-            int titleCount2 =  drawString(graphics2d,font,title2, 80,270 + 50 - 30,300);
+           // int titleCount2 =  drawString(graphics2d,font,title2, 80,270 + 50 - 30,300);
             //头像
-            graphics2d.drawImage(bufferSrcImage1, x/2- bufferSrcImage1.getWidth()/2, 250 + 60 + 50 - 30, bufferSrcImage1.getWidth()-20, bufferSrcImage1.getHeight()-20, null);
+            graphics2d.drawImage(bufferSrcImage1, x/2- bufferSrcImage1.getWidth()/2, 250 + 60 + 50+50, bufferSrcImage1.getWidth()-20, bufferSrcImage1.getHeight()-20, null);
 
             //昵称
            int nickLenth = fontToCenter(nickaName);
-            int nickCount =  drawString(graphics2d,font,nickaName,x/2- bufferSrcImage1.getWidth()/2 - nickLenth,270+bufferSrcImage1.getHeight() + 60 + 50 -30,300);
+            int nickCount =  drawString(graphics2d,font,nickaName,x/2- bufferSrcImage1.getWidth()/2 - nickLenth,270+bufferSrcImage1.getHeight() + 60 + 50 +50,300);
             //点赞
            // graphics2d.drawImage(bufferSrcImage3, x/2+ bufferSrcImage1.getWidth()/2 + 30, 250 + bufferSrcImage3.getHeight()/2 + 60 + 50,bufferSrcImage3.getWidth() - 15,bufferSrcImage3.getHeight() - 15, null);
             //int dianCount =  drawString(graphics2d,font,dianZan,x/2+ bufferSrcImage1.getWidth()/2 +bufferSrcImage1.getWidth()-44,250 + bufferSrcImage3.getHeight()+4 + 60 + 50,300);
-            //产品名称
-            int productLenth = fontToCenter(productName);
-            int productCount =  drawString(graphics2d,font,productName,x/2- bufferSrcImage1.getWidth()/2 - productLenth - 30,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 -30,300);
-            // 产品介绍
+            //产品名称 （改成 第几位网络火炬传递手）
             graphics2d.setPaint(new Color(255,255,255));
             graphics2d.setFont(font2);
-            int productDescCount =  drawString1(graphics2d,font,productDesc, 40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 + 50 -30,320);
+            drawString(graphics2d,font,"第 ",40+60,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+            drawString(graphics2d,font,dianZan+" ",100+60,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+            drawString(graphics2d,font,"_",100+40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+50,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+60,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+70,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+80,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+90,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+100,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+110,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"_",100+120,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+            drawString(graphics2d,font,"位网络火炬传递手",180+60,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+           // int productLenth = fontToCenter(productName);
+            //int productCount =  drawString(graphics2d,font,productName,x/2- bufferSrcImage1.getWidth()/2 - productLenth - 30,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +100,300);
+            // 产品介绍
+          //  graphics2d.setPaint(new Color(255,255,255));
+           // graphics2d.setFont(font2);
+            //int productDescCount =  drawString1(graphics2d,font,productDesc, 40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 + 50 -30,320);
 
             //下方二维码和公众号
-            graphics2d.drawImage(bufferSrcImage2,40,y- bufferSrcImage2.getWidth()*2-25,bufferSrcImage2.getWidth()*2,bufferSrcImage2.getHeight()*2,null);
+            graphics2d.drawImage(bufferSrcImage2,x/2- 300/2,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80+60,300,300,null);
             graphics2d.setPaint(new Color(255,255,255));
             graphics2d.setFont(font1);
             //drawString(graphics2d,font,changan,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20,300);
 
-            graphics2d.setPaint(new Color(255,255,255));
-            graphics2d.setFont(font2);
+            //graphics2d.setPaint(new Color(255,255,255));
+           // graphics2d.setFont(font2);
             //drawString(graphics2d,font,phone,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
             //drawString(graphics2d,font,weixin,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
 
-            drawString(graphics2d,font,"了解更多",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
-            drawString(graphics2d,font,"关注【中追溯源】公众号",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
+           // drawString(graphics2d,font,"了解更多",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60-30,300);
+           // drawString(graphics2d,font,"关注【中追溯源】公众号",40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20 + 60 + 40 -30,300);
 
 
             graphics2d.dispose();
