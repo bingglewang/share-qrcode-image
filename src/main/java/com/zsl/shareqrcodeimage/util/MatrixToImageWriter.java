@@ -221,9 +221,9 @@ public class MatrixToImageWriter {
             // 输出图片宽度
             int width =  x;
             int height = y;
-            Font font = new Font("宋体", Font.BOLD, 14);
-            Font font1 = new Font("宋体", Font.BOLD, 32);
-            Font font2 = new Font("宋体", Font.BOLD, 40);
+            Font font = new Font("黑体", Font.BOLD, 14);
+            Font font1 = new Font("黑体", Font.BOLD, 32);
+            Font font2 = new Font("黑体", Font.BOLD, 40);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(255, 255, 255);
@@ -320,7 +320,7 @@ public class MatrixToImageWriter {
             //int productDescCount =  drawString1(graphics2d,font,productDesc, 40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 + 50 -30,320);
 
             //下方二维码和公众号
-            graphics2d.drawImage(bufferSrcImage2,x/2- 300/2,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80+40,300,300,null);
+            graphics2d.drawImage(bufferSrcImage2,x/2- bufferSrcImage2.getWidth()/2,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80+40,bufferSrcImage2.getWidth(),bufferSrcImage2.getHeight(),null);
             graphics2d.setPaint(new Color(255,255,255));
             graphics2d.setFont(font1);
             //drawString(graphics2d,font,changan,40 + bufferSrcImage2.getWidth()*2 + 60,y- bufferSrcImage2.getWidth()*2+20,300);

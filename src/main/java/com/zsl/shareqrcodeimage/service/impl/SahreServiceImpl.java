@@ -181,7 +181,7 @@ public class SahreServiceImpl implements ShareService {
         BufferedImage urlFile2 =
                 ImgToCircleUtil.getUrlByBufferedImage(qrcode);
         // 处理图片将其压缩成正方形的小图
-        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 90, 90);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 300, 300);
         // 生成的图片位置
         String imagePathFile2 = FilePathUtils.getTempFilePath() + File.separator + "qrcode.png";
 
