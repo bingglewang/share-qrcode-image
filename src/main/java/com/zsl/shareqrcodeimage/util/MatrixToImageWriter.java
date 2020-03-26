@@ -256,9 +256,18 @@ public class MatrixToImageWriter {
             //产品名称 （改成 第几位网络火炬传递手）
             graphics2d.setPaint(new Color(255,255,255));
             graphics2d.setFont(font2);
-            drawString(graphics2d,font,"第 ",40+60-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+
             String dianzanStr = dianZan.toString();
-            drawString(graphics2d,font,dianZan+" ",100+60-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+            int marginLeft = 0;
+            if(dianzanStr.length() <= 3){
+                marginLeft = 38;
+            }else if(dianzanStr.length() == 4){
+                marginLeft = 15;
+            }else if(dianzanStr.length() == 5){
+                marginLeft = 10;
+            }
+            drawString(graphics2d,font,"第 ",marginLeft + 40+60-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+            drawString(graphics2d,font,dianZan+" ", marginLeft + 100+60-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
            /* if(dianzanStr.length() <= 3){
                 drawString(graphics2d,font,"_",100+40,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
                 drawString(graphics2d,font,"_",100+50,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
@@ -274,30 +283,30 @@ public class MatrixToImageWriter {
             for(int i = 0; i < dianzenLen;i++){
                 if(dianzenLen == 1){
                     for(int j = 1; j <= 5;j++){
-                        drawString(graphics2d,font,"_",130+(i * 5 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+                        drawString(graphics2d,font,"_",marginLeft + 130+(i * 5 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
                     }
                 }else if (dianzenLen == 2){
                     for(int j = 1; j <= 4;j++){
-                        drawString(graphics2d,font,"_",130+(i * 4 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+                        drawString(graphics2d,font,"_",marginLeft + 130+(i * 4 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
                     }
                 }else if (dianzenLen >= 3){
                     if(i <= 6){
                         for(int j = 1; j <= 3;j++){
-                            drawString(graphics2d,font,"_",130+(i * 3 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
+                            drawString(graphics2d,font,"_",marginLeft + 130+(i * 3 + j)*10-25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +90,300);
                         }
                     }
                 }
             }
 
             if(dianzenLen == 1){
-                drawString(graphics2d,font,"位网络火炬传递手",150 + dianzenLen * 50 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+                drawString(graphics2d,font,"位网络火炬传递手",marginLeft + 150 + dianzenLen * 50 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
             }else if (dianzenLen == 2){
-                drawString(graphics2d,font,"位网络火炬传递手",150 + dianzenLen * 40 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+                drawString(graphics2d,font,"位网络火炬传递手",marginLeft + 150 + dianzenLen * 40 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
             }else if (dianzenLen >= 3 ){
                 if(dianzenLen >= 7){
-                    drawString(graphics2d,font,"位网络火炬传递手",150 + 7 * 30 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+                    drawString(graphics2d,font,"位网络火炬传递手",marginLeft + 150 + 7 * 30 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
                 }else{
-                    drawString(graphics2d,font,"位网络火炬传递手",150 + dianzenLen * 30 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
+                    drawString(graphics2d,font,"位网络火炬传递手",marginLeft + 150 + dianzenLen * 30 -25,270+bufferSrcImage1.getHeight() + 60 + 50 + 40 +80,300);
                 }
             }
 
@@ -374,7 +383,7 @@ public class MatrixToImageWriter {
         String qrCodeName = "new315.jpg";
 
         String nickName = "对方正在输入。。。";
-        String dianZan = "1234";
+        String dianZan = "123443";
         String title1 = "统计截至：2019-12-23 14:23";
         String title2 = "全国排名13名，广东省排名213名";
         String productName = "产品名称：XXXXX产品";
