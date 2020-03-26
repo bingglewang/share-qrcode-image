@@ -244,12 +244,20 @@ public class MatrixToImageWriter {
            // int titleCount1 =  drawString(graphics2d,font,title1, 80,270,300);
             //标题 2
            // int titleCount2 =  drawString(graphics2d,font,title2, 80,270 + 50 - 30,300);
-            //头像
-            graphics2d.drawImage(bufferSrcImage1, x/2- bufferSrcImage1.getWidth()/2, 250 + 60 + 50+50, bufferSrcImage1.getWidth()-20, bufferSrcImage1.getHeight()-20, null);
+
+
+            //头像 (居中)
+            graphics2d.drawImage(bufferSrcImage1, (x- (bufferSrcImage1.getWidth()-20)) / 2, 250 + 60 + 50+50, bufferSrcImage1.getWidth()-20, bufferSrcImage1.getHeight()-20, null);
 
             //昵称
+            // 居中
+            FontMetrics fm = graphics2d.getFontMetrics(font1);
+            int textWidth = fm.stringWidth(nickaName);
+            int nickx = (x- textWidth) / 2;
+
            int nickLenth = fontToCenter(nickaName);
-            int nickCount =  drawString(graphics2d,font,nickaName,x/2- bufferSrcImage1.getWidth()/2 - nickLenth,270+bufferSrcImage1.getHeight() + 60 + 50 +50,300);
+            int nickCount =  drawString(graphics2d,font,nickaName,nickx,270+bufferSrcImage1.getHeight() + 60 + 50 +50,300);
+            //int nickCount =  drawString(graphics2d,font,nickaName,x/2- bufferSrcImage1.getWidth()/2 - nickLenth,270+bufferSrcImage1.getHeight() + 60 + 50 +50,300);
             //点赞
            // graphics2d.drawImage(bufferSrcImage3, x/2+ bufferSrcImage1.getWidth()/2 + 30, 250 + bufferSrcImage3.getHeight()/2 + 60 + 50,bufferSrcImage3.getWidth() - 15,bufferSrcImage3.getHeight() - 15, null);
             //int dianCount =  drawString(graphics2d,font,dianZan,x/2+ bufferSrcImage1.getWidth()/2 +bufferSrcImage1.getWidth()-44,250 + bufferSrcImage3.getHeight()+4 + 60 + 50,300);
@@ -382,7 +390,7 @@ public class MatrixToImageWriter {
     public static void main(String[] args) throws Exception{
         String qrCodeName = "new315.jpg";
 
-        String nickName = "对方正在输入。。。";
+        String nickName = "parker";
         String dianZan = "123443";
         String title1 = "统计截至：2019-12-23 14:23";
         String title2 = "全国排名13名，广东省排名213名";
@@ -438,6 +446,12 @@ public class MatrixToImageWriter {
                     nickLenth += 10;
                 }
             }else if(length == 2){
+                nickLenth = -20;
+            }else if(length == 1){
+                nickLenth = -40;
+            }
+        }else{
+           if(length == 2){
                 nickLenth = -20;
             }else if(length == 1){
                 nickLenth = -40;
