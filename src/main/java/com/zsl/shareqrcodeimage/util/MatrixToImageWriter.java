@@ -3,7 +3,10 @@ package com.zsl.shareqrcodeimage.util;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -360,6 +363,251 @@ public class MatrixToImageWriter {
     }
 
 
+
+    /**
+     * （板根商城）
+     *  用户，代理商 邀请海报生成
+     * @param backImage 海报背景图
+     * @param qrCodeImage 二维码图片
+     * @param nickName 昵称
+     * @param shareText 分享标题
+     * @param descImage 生成图片能保存路径
+     * @return
+     */
+    public static void mergeImage4(String backImage, String qrCodeImage, String nickName,String shareText,String descImage) {
+        try {
+            BufferedImage backBufferedImage = ImageIO.read(new File(backImage));
+            BufferedImage qrCodeBufferedImage = ImageIO.read(new File(qrCodeImage));
+
+            int x = backBufferedImage.getWidth();
+            int y = backBufferedImage.getHeight();
+
+            // 输出图片宽度
+            int width =  x;
+            int height = y + 120;
+            Font font = new Font("黑体", Font.PLAIN, 18);
+            Font font1 = new Font("黑体", Font.BOLD, 22);
+            BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
+            Color color = new Color(255, 255, 255);
+            graphics2d.setBackground(color);
+
+            graphics2d.clearRect(0, 0, width, height);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            // 往画布上添加图片,并设置边距
+            //背景图
+            graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
+            //二维码
+            graphics2d.drawImage(qrCodeBufferedImage, 0+35, y+15,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            //昵称
+            graphics2d.setPaint(new Color(38, 50, 137));
+            graphics2d.setFont(font1);
+            graphics2d.drawString(nickName,0+35+qrCodeBufferedImage.getWidth() + 24,y+20+30);
+            //分享标题
+            graphics2d.setPaint(new Color(34, 32, 32));
+            graphics2d.setFont(font);
+            graphics2d.drawString(shareText,0+35+qrCodeBufferedImage.getWidth() + 24,y+20+20+40);
+
+            graphics2d.dispose();
+            // 输出新图片
+            ImageIO.write(descBufferedImage, "png", new File(descImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *  （板根商城）
+     *  快洁安，板根分享海报
+     * @param backImg 海报背景图
+     * @param headImg 头像
+     * @param nickName 昵称
+     * @param shareText 分享标题
+     * @param price 商品价格
+     * @param productDesc 商品描述
+     * @param qrCodeImg 二维码图片
+     * @param descImage 生成图片能保存路径
+     * @return
+     */
+    public static void mergeImage5(String backImg,String headImg, String nickName, String shareText, String price, String productDesc,String qrCodeImg,String descImage) {
+        try {
+
+            String middleCircleImg = mergeCircleImg(backImg,price,productDesc,qrCodeImg);
+            BufferedImage backTmpBufferedImage = ImageIO.read(new File(middleCircleImg));
+            // 生成的图片位置
+            String tmpMiddleSave = FilePathUtils.getTempFilePath() + File.separator + "tmpMiddleSave.png";
+            String middleBackImg = makeCircularImg(middleCircleImg,tmpMiddleSave,backTmpBufferedImage.getWidth(),backTmpBufferedImage.getHeight(),40);
+            // 中间背景图片
+            BufferedImage backBufferedImage = ImageIO.read(new File(middleBackImg));
+            // 头像
+            BufferedImage headBufferedImage = ImageIO.read(new File(headImg));
+
+            int x = backBufferedImage.getWidth();
+            int y = backBufferedImage.getHeight();
+
+            // 输出图片宽度
+            int width =  x+40;
+            int height = y + 145;
+            Font font = new Font("黑体", Font.PLAIN, 18);
+            Font font1 = new Font("黑体", Font.BOLD, 22);
+            BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
+            Color color = new Color(255, 255, 255);
+            graphics2d.setBackground(color);
+
+            graphics2d.clearRect(0, 0, width, height);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            // 往画布上添加图片,并设置边距
+            //背景图
+            BufferedImage shadow = createDropShadow(backBufferedImage,4);
+            graphics2d.drawImage(shadow, 12, 102,x,y, null);
+            graphics2d.drawImage(backBufferedImage, 20, 110,x,y, null);
+            //头像
+            graphics2d.drawImage(headBufferedImage, 20, 20,headBufferedImage.getWidth(),headBufferedImage.getHeight(), null);
+            //昵称
+            graphics2d.setPaint(new Color(29, 28, 28));
+            graphics2d.setFont(font1);
+            graphics2d.drawString(nickName,20+headBufferedImage.getWidth() + 24,50);
+            //分享标题
+            graphics2d.setPaint(new Color(167, 165, 166));
+            graphics2d.setFont(font);
+            graphics2d.drawString(shareText,20+headBufferedImage.getWidth() + 24,78);
+
+            graphics2d.dispose();
+            // 输出新图片
+            ImageIO.write(descBufferedImage, "png", new File(descImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+   /* public static void main(String[] args) throws Exception{
+        String text = "你好测试一下"; // 二维码内容
+        int width = 120; // 二维码图片宽度
+        int height = 120; // 二维码图片高度
+        String format = "jpg";// 二维码的图片格式
+        String qrCodeName = "upQrCode.jpg";
+        createUPQrCode(text, width, height, format, qrCodeName);
+        //二维码路径
+        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+        //背景图片路径
+        File file = ResourceUtils.getFile("classpath:static/image/upUserBack.png");
+        String backImg = file.getPath();
+        String nickName = "基督教大家";
+        String shareText = "解决房价发生了附近昆仑山地方";
+        // 生成的图片位置
+        String destPath = FilePathUtils.getTempFilePath() + File.separator + "upUserShare.png";
+        mergeImage4(backImg,qrCodePath,nickName,shareText,destPath);
+    }*/
+
+
+    public static void main(String[] args) throws Exception{
+        String text = "sdfsdfsdf"; // 二维码内容
+        int width = 200; // 二维码图片宽度
+        int height = 200; // 二维码图片高度
+        String format = "jpg";// 二维码的图片格式
+        String qrCodeName = "upFastQrCode.jpg";
+        createUPQrCode(text, width, height, format, qrCodeName);
+        //二维码路径
+        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+        //背景图片路径
+        File file = ResourceUtils.getFile("classpath:static/image/upFastBack.png");
+        String backImg = file.getPath();
+        String price = "￥29.9";
+        String productDesc = "【快洁安】次氯酸免洗多用途消毒健康喷剂100ml";
+
+        // 头像
+        String urlSrc = "http://thirdwx.qlogo.cn/mmopen/vi_32/zrH3ibmkZB6sjwphQe5EQkArqxUPsenB78vLjSgQIcWrNhn99t4yCZPeDXU2gUHtibUgz31q9njJLR5sRlkwsHQQ/132";
+        // http://avatar.csdn.net/3/1/7/1_qq_27292113.jpg?1488183229974
+        // 是头像地址
+        // 获取图片的流
+        BufferedImage url =
+                ImgToCircleUtil.getUrlByBufferedImage(urlSrc);
+
+        // 处理图片将其压缩成正方形的小图
+        BufferedImage convertImage = ImgToCircleUtil.scaleByPercentage(url, 20, 20);
+        // 裁剪成圆形 （传入的图像必须是正方形的 才会 圆形 如果是长方形的比例则会变成椭圆的）
+        convertImage = ImgToCircleUtil.convertCircular(url);
+        // 生成的图片位置
+        String imagePath = FilePathUtils.getTempFilePath() + File.separator + "touxiangUp.png";
+
+        ImageIO.write(convertImage, imagePath.substring(imagePath.lastIndexOf(".") + 1), new File(imagePath));
+        //昵称
+        String nickName = "对方正在输入...";
+        String shareText = "范德萨就开了分手的借口了";
+        // 生成的图片位置
+        String destPath = FilePathUtils.getTempFilePath() + File.separator + "upFastShareImg.png";
+        mergeImage5(backImg,imagePath,nickName,shareText,price,productDesc,qrCodePath,destPath);
+    }
+
+
+
+    /**
+     *  （板根商城）
+     *  快洁安，板根分享海报  (中间圆角图片)
+     * @param backImg 海报背景图
+     * @param price 商品价格
+     * @param productDesc 商品描述
+     * @param qrCodeImg 二维码图片
+     * @return 生成图片路径
+     */
+    public static String mergeCircleImg(String backImg,String price, String productDesc,String qrCodeImg) {
+        try {
+            BufferedImage backBufferedImage = ImageIO.read(new File(backImg));
+            BufferedImage qrCodeBufferedImage = ImageIO.read(new File(qrCodeImg));
+
+            int x = backBufferedImage.getWidth();
+            int y = backBufferedImage.getHeight();
+
+            // 输出图片宽度
+            int width =  x;
+            int height = y + 170;
+            Font font = new Font("黑体", Font.BOLD, 18);
+            Font font1 = new Font("黑体", Font.BOLD, 30);
+            BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
+            Color color = new Color(250, 250, 250);
+            graphics2d.setBackground(color);
+
+            graphics2d.clearRect(0, 0, width, height);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            // 往画布上添加图片,并设置边距
+            //背景图
+            graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
+            //二维码
+            graphics2d.drawImage(qrCodeBufferedImage, x - qrCodeBufferedImage.getWidth() - 25, y+10,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            //价格
+            graphics2d.setPaint(new Color(91, 142, 219));
+            graphics2d.setFont(font1);
+            graphics2d.drawString(price,  24,y+20+20);
+            //商品描述
+            graphics2d.setPaint(new Color(34, 32, 32));
+            graphics2d.setFont(font);
+            drawString(graphics2d,font, productDesc,24,y+20+20+30,230);
+
+            graphics2d.dispose();
+
+            // 生成的图片位置
+            String destPath = FilePathUtils.getTempFilePath() + File.separator + "middleCircleImg.png";
+            // 输出新图片
+            ImageIO.write(descBufferedImage, "png", new File(destPath));
+            return destPath;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+
+
+
    /* public static void main(String[] args) throws Exception {
         String text = "shabi"; // 二维码内容
         int width = 100; // 二维码图片宽度
@@ -387,7 +635,7 @@ public class MatrixToImageWriter {
         mergeImage2(price, title, file.getPath(), file1.getPath(), qrCodePath, 250, 250);
     }*/
 
-    public static void main(String[] args) throws Exception{
+    /*public static void main(String[] args) throws Exception{
         String qrCodeName = "new315.jpg";
 
         String nickName = "parker";
@@ -426,7 +674,7 @@ public class MatrixToImageWriter {
         String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + qrCodeName;
         mergeImage3(file3.getPath(),imagePath , file2.getPath(), file4.getPath(), qrCodePath,nickName,dianZan,title1,title2,productName,productDesc,changan,phone,weixin);
     }
-
+*/
 
     public static int fontToCenter(String str){
         int length = str.length();
@@ -570,4 +818,132 @@ public class MatrixToImageWriter {
         MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
     }
 
+
+    /**
+     * 创建板根商城二维码
+     * @param text
+     * @param width
+     * @param height
+     * @param format
+     * @param qrCodeName
+     * @throws Exception
+     */
+    public static void createUPQrCode(String text, int width, int height, String format, String qrCodeName) throws Exception {
+        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8"); // 内容所使用字符集编码
+
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(text,
+                BarcodeFormat.QR_CODE, width, height, hints);
+        bitMatrix = deleteWhite(bitMatrix);
+        // 生成二维码
+        File outputFile = new File(FilePathUtils.getTempFilePath() + File.separator + qrCodeName);
+        MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
+    }
+
+
+    /**
+     * 去除二维码白色边边
+     * @param matrix
+     * @return
+     */
+    private static BitMatrix deleteWhite(BitMatrix matrix) {
+        int[] rec = matrix.getEnclosingRectangle();
+        int resWidth = rec[2] + 1;
+        int resHeight = rec[3] + 1;
+
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight);
+        resMatrix.clear();
+        for (int i = 0; i < resWidth; i++) {
+            for (int j = 0; j < resHeight; j++) {
+                if (matrix.get(i + rec[0], j + rec[1]))
+                    resMatrix.set(i, j);
+            }
+        }
+        return resMatrix;
+    }
+
+
+    /***
+     *
+     * @param srcFilePath 源图片文件路径
+     * @param circularImgSavePath 新生成的图片的保存路径，需要带有保存的文件名和后缀
+     * @param widthSize 文件的边长，单位：像素，最终得到的是一张正方形的图，所以要求targetSize<=源文件的最小边长
+     * @param cornerRadius 圆角半径，单位：像素。如果=targetSize那么得到的是圆形图
+     * @return  文件的保存路径
+     * @throws IOException
+     */
+    public static String makeCircularImg(String srcFilePath, String circularImgSavePath,int widthSize,int heightSize, int cornerRadius) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(new File(srcFilePath));
+        BufferedImage circularBufferImage = roundImage(bufferedImage,widthSize,heightSize,cornerRadius);
+        ImageIO.write(circularBufferImage, "png", new File(circularImgSavePath));
+        return circularImgSavePath;
+    }
+
+    private static BufferedImage roundImage(BufferedImage image, int widthSize,int heightSize, int cornerRadius) {
+        BufferedImage outputImage = new BufferedImage(widthSize, heightSize, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = outputImage.createGraphics();
+        g2.setComposite(AlphaComposite.Src);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+        g2.fill(new RoundRectangle2D.Float(0, 0, widthSize, heightSize, cornerRadius, cornerRadius));
+        g2.setComposite(AlphaComposite.SrcAtop);
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+        return outputImage;
+    }
+
+
+    /**
+     * 给指定图片创建阴影
+     * @param image
+     * @param size
+     * @return
+     */
+    public static BufferedImage createDropShadow(BufferedImage image,
+                                                 int size) {
+        BufferedImage shadow = new BufferedImage(image.getWidth() + 4
+                * size, image.getHeight() + 4 * size,
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = shadow.createGraphics();
+        g2.drawImage(image, size * 2, size * 2, null);
+
+        g2.setComposite(AlphaComposite.SrcIn);
+        g2.setColor(Color.gray);
+        g2.fillRoundRect(0, 0, shadow.getWidth(), shadow.getHeight(), 30,
+                30);
+        g2.dispose();
+        shadow = getGaussianBlurFilter(size, true).filter(shadow, null);
+        shadow = getGaussianBlurFilter(size, false).filter(shadow, null);
+        return shadow;
+    }
+
+    public static ConvolveOp getGaussianBlurFilter(int radius,
+                                                   boolean horizontal) {
+        if (radius < 1) {
+            throw new IllegalArgumentException("Radius must be >= 1");
+        }
+        int size = radius * 2 + 1;
+        float[] data = new float[size];
+        float sigma = radius / 3.0f;
+        float twoSigmaSquare = 2.0f * sigma * sigma;
+        float sigmaRoot = (float) Math.sqrt(twoSigmaSquare * Math.PI);
+        float total = 0.0f;
+        for (int i = -radius; i <= radius; i++) {
+            float distance = i * i;
+            int index = i + radius;
+            data[index] = (float) Math.exp(-distance / twoSigmaSquare)
+                    / sigmaRoot;
+            total += data[index];
+        }
+        for (int i = 0; i < data.length; i++) {
+            data[i] /= total;
+        }
+        Kernel kernel;
+        if (horizontal) {
+            kernel = new Kernel(size, 1, data);
+        } else {
+            kernel = new Kernel(1, size, data);
+        }
+        return new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
+    }
 }

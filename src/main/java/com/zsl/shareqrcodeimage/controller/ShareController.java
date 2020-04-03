@@ -3,6 +3,8 @@ package com.zsl.shareqrcodeimage.controller;
 import com.zsl.shareqrcodeimage.common.CommonResult;
 import com.zsl.shareqrcodeimage.dto.ShareDto;
 import com.zsl.shareqrcodeimage.dto.TorchDto;
+import com.zsl.shareqrcodeimage.dto.UpProductDto;
+import com.zsl.shareqrcodeimage.dto.UpUserDto;
 import com.zsl.shareqrcodeimage.service.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +60,29 @@ public class ShareController {
             return CommonResult.success(result,"火炬海报生成失败");
         }
         return CommonResult.success(result,"火炬海报生成成功");
+    }
+
+    @PostMapping("up/user")
+    private CommonResult createUpUserShareImg(@RequestBody UpUserDto upUserDto){
+        String result = null;
+        try {
+            result = shareService.createUpUserShareImg(upUserDto.getBackUrl(),upUserDto.getQrCodeContent(),upUserDto.getNickName(),upUserDto.getShareText(),upUserDto.getShareId()+".png");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.success(result,"海报生成失败");
+        }
+        return CommonResult.success(result,"海报生成成功");
+    }
+
+    @PostMapping("up/product")
+    private CommonResult createUpProductShareImg(@RequestBody UpProductDto upProductDto){
+        String result = null;
+        try {
+            result = shareService.createUpProductShareImg(upProductDto.getBackUrl(),upProductDto.getHeadImg(),upProductDto.getQrCodeImg(),upProductDto.getNickName(),upProductDto.getShareText(),upProductDto.getPrice(),upProductDto.getProductDesc(),upProductDto.getShareId()+".png");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.success(result,"海报生成失败");
+        }
+        return CommonResult.success(result,"海报生成成功");
     }
 }

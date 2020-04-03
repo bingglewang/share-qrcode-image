@@ -221,4 +221,121 @@ public class SahreServiceImpl implements ShareService {
         }
         return haibaoPath;
     }
+
+    /**
+     * （板根商城）
+     * 用户，代理商 邀请海报生成
+     *
+     * @param backUrl       背景图片地址
+     * @param qrCodeContent 二维码内容
+     * @param nickName      昵称
+     * @param shareText     分享标题
+     * @param destPath      图片保存路径（一般用户id，或者时间戳，或者能够唯一标识）
+     * @return
+     */
+    @Override
+    public String createUpUserShareImg(String backUrl, String qrCodeContent, String nickName, String shareText, String destPath) {
+        // 获得背景图片 文件
+        File file = null;
+        try {
+            String url = backUrl;
+            String path = FilePathUtils.getTempFilePath() + File.separator;
+            String res = DownloadURLFile.downloadFromUrl(url, path);
+            String name = DownloadURLFile.getFileNameFromUrl(url);
+            file = new File(path+name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // 生成二维码
+        String text = qrCodeContent; // 二维码内容
+        int width = 120; // 二维码图片宽度
+        int height = 120; // 二维码图片高度
+        String format = "jpg";// 二维码的图片格式
+        String qrCodeName = "upQrCode.jpg";
+        try {
+            MatrixToImageWriter.createUPQrCode(text, width, height, format, qrCodeName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+
+        // 生成海报
+        String destSavePath = FilePathUtils.getTempFilePath() + File.separator + destPath;
+        MatrixToImageWriter.mergeImage4(file.getPath(),qrCodePath , nickName, shareText,destSavePath);
+
+        // 上传腾讯cos
+        String haibaoPath = HttpUtils.uploadImageToCos(destSavePath,destPath);
+
+        File fileDelete = new File(destSavePath);
+        //如果存在则删除
+        if(fileDelete.exists()){
+            fileDelete.delete();
+        }
+        return haibaoPath;
+    }
+
+    /**
+     * （板根商城）
+     * 快洁安，板根分享海报
+     *
+     * @param backUrl     背景图片地址
+     * @param headImg     头像图片地址
+     * @param qrCodeImg   二维码图片地址
+     * @param nickName    昵称
+     * @param shareText   分享标题
+     * @param price       价格
+     * @param productDesc 商品描述
+     * @param destPath    图片保存地址（一般用户id，或者时间戳，或者能够唯一标识）
+     * @return
+     */
+    @Override
+    public String createUpProductShareImg(String backUrl, String headImg, String qrCodeImg, String nickName, String shareText, String price, String productDesc, String destPath) throws Exception{
+        // 二维码
+        BufferedImage urlFile2 =
+                ImgToCircleUtil.getUrlByBufferedImage(qrCodeImg);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 150, 150);
+        convertImageFile2 = ImgToCircleUtil.convertCircular(convertImageFile2);
+        // 生成的图片位置 ( 二维码)
+        String imagePathFile2 = FilePathUtils.getTempFilePath() + File.separator + "upFastQrCodeProduct.png";
+        ImageIO.write(convertImageFile2, imagePathFile2.substring(imagePathFile2.lastIndexOf(".") + 1), new File(imagePathFile2));
+
+        // 头像
+        BufferedImage url =
+                ImgToCircleUtil.getUrlByBufferedImage(headImg);
+        BufferedImage convertImage = ImgToCircleUtil.scaleByPercentage(url, 70, 70);
+        convertImage = ImgToCircleUtil.convertCircular(convertImage);
+        // 生成的图片位置
+        String imagePath = FilePathUtils.getTempFilePath() + File.separator + "touxiangUp.png";
+        ImageIO.write(convertImage, imagePath.substring(imagePath.lastIndexOf(".") + 1), new File(imagePath));
+
+        // 获得背景图片 文件
+        File file = null;
+        try {
+            String urlBack = backUrl;
+            String path = FilePathUtils.getTempFilePath() + File.separator;
+            String res = DownloadURLFile.downloadFromUrl(urlBack, path);
+            String name = DownloadURLFile.getFileNameFromUrl(urlBack);
+            file = new File(path+name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        //生成海报
+        String destSavePath = FilePathUtils.getTempFilePath() + File.separator + destPath;
+        MatrixToImageWriter.mergeImage5(file.getPath(),imagePath , nickName, shareText, price,productDesc,imagePathFile2,destSavePath);
+
+        // 上传海报到腾讯cos
+        String haibaoPath = HttpUtils.uploadImageToCos(destSavePath,destPath);
+
+        File fileDelete = new File(destSavePath);
+        //如果存在则删除
+        if(fileDelete.exists()){
+            fileDelete.delete();
+        }
+        return haibaoPath;
+    }
 }
