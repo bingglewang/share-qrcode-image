@@ -50,7 +50,7 @@ public interface ShareService {
      * @param destPath  图片保存路径（一般用户id，或者时间戳，或者能够唯一标识）
      * @return
      */
-    String createUpUserShareImg(String backUrl,String qrCodeContent,String nickName,String shareText,String destPath);
+    String createUpUserShareImg(String backUrl,String qrCodeContent,String nickName,String shareText,String destPath) throws Exception;
 
 
     /**

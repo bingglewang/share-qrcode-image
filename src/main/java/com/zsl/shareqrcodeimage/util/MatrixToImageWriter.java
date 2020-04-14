@@ -400,7 +400,7 @@ public class MatrixToImageWriter {
             //背景图
             graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
             //二维码
-            graphics2d.drawImage(qrCodeBufferedImage, 0+35, y+15,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            graphics2d.drawImage(qrCodeBufferedImage, 0+30, y+10,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
             //昵称
             graphics2d.setPaint(new Color(38, 50, 137));
             graphics2d.setFont(font1);
@@ -486,15 +486,18 @@ public class MatrixToImageWriter {
     }
 
 
-   /* public static void main(String[] args) throws Exception{
-        String text = "你好测试一下"; // 二维码内容
-        int width = 120; // 二维码图片宽度
-        int height = 120; // 二维码图片高度
-        String format = "jpg";// 二维码的图片格式
-        String qrCodeName = "upQrCode.jpg";
-        createUPQrCode(text, width, height, format, qrCodeName);
-        //二维码路径
-        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+    public static void main(String[] args) throws Exception{
+        // 生成二维码
+        String qrCodeContent = "https://zs-1256645015.cos.ap-guangzhou.myqcloud.com/trace/2020/3/13/c139b00d-759f-4e8b-a2d0-ccc14db099e0.jpg";
+        BufferedImage urlFile2 =
+                ImgToCircleUtil.getUrlByBufferedImage(qrCodeContent);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 100, 100);
+        convertImageFile2 = ImgToCircleUtil.convertCircular(convertImageFile2);
+        // 生成的图片位置 ( 二维码)
+        String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + "upQrCode.png";
+        ImageIO.write(convertImageFile2, qrCodePath.substring(qrCodePath.lastIndexOf(".") + 1), new File(qrCodePath));
+
+
         //背景图片路径
         File file = ResourceUtils.getFile("classpath:static/image/upUserBack.png");
         String backImg = file.getPath();
@@ -503,10 +506,10 @@ public class MatrixToImageWriter {
         // 生成的图片位置
         String destPath = FilePathUtils.getTempFilePath() + File.separator + "upUserShare.png";
         mergeImage4(backImg,qrCodePath,nickName,shareText,destPath);
-    }*/
+    }
 
 
-    public static void main(String[] args) throws Exception{
+  /*  public static void main(String[] args) throws Exception{
         String text = "sdfsdfsdf"; // 二维码内容
         int width = 200; // 二维码图片宽度
         int height = 200; // 二维码图片高度
@@ -543,7 +546,7 @@ public class MatrixToImageWriter {
         // 生成的图片位置
         String destPath = FilePathUtils.getTempFilePath() + File.separator + "upFastShareImg.png";
         mergeImage5(backImg,imagePath,nickName,shareText,price,productDesc,qrCodePath,destPath);
-    }
+    }*/
 
 
 

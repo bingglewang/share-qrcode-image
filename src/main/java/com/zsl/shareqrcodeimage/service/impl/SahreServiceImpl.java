@@ -234,7 +234,7 @@ public class SahreServiceImpl implements ShareService {
      * @return
      */
     @Override
-    public String createUpUserShareImg(String backUrl, String qrCodeContent, String nickName, String shareText, String destPath) {
+    public String createUpUserShareImg(String backUrl, String qrCodeContent, String nickName, String shareText, String destPath)throws Exception {
         // 获得背景图片 文件
         File file = null;
         try {
@@ -249,18 +249,15 @@ public class SahreServiceImpl implements ShareService {
         }
 
         // 生成二维码
-        String text = qrCodeContent; // 二维码内容
-        int width = 120; // 二维码图片宽度
-        int height = 120; // 二维码图片高度
-        String format = "jpg";// 二维码的图片格式
-        String qrCodeName = "upQrCode.jpg";
-        try {
-            MatrixToImageWriter.createUPQrCode(text, width, height, format, qrCodeName);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-        String qrCodePath = FilePathUtils.getTempFilePath()+File.separator+qrCodeName;
+        BufferedImage urlFile2 =
+                ImgToCircleUtil.getUrlByBufferedImage(qrCodeContent);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 120, 120);
+        convertImageFile2 = ImgToCircleUtil.convertCircular(convertImageFile2);
+        // 生成的图片位置 ( 二维码)
+        String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + "upQrCode.png";
+        ImageIO.write(convertImageFile2, qrCodePath.substring(qrCodePath.lastIndexOf(".") + 1), new File(qrCodePath));
+
+
 
         // 生成海报
         String destSavePath = FilePathUtils.getTempFilePath() + File.separator + destPath;
