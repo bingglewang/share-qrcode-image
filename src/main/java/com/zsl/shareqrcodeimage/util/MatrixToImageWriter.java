@@ -384,9 +384,9 @@ public class MatrixToImageWriter {
 
             // 输出图片宽度
             int width =  x;
-            int height = y + 120;
+            int height = y;
             Font font = new Font("黑体", Font.PLAIN, 18);
-            Font font1 = new Font("黑体", Font.BOLD, 22);
+            Font font1 = new Font("黑体", Font.BOLD, 70);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(255, 255, 255);
@@ -400,15 +400,15 @@ public class MatrixToImageWriter {
             //背景图
             graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
             //二维码
-            graphics2d.drawImage(qrCodeBufferedImage, 0+30, y+10,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            graphics2d.drawImage(qrCodeBufferedImage, 0+50, y-40 - qrCodeBufferedImage.getHeight(),qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
             //昵称
             graphics2d.setPaint(new Color(38, 50, 137));
             graphics2d.setFont(font1);
-            graphics2d.drawString(nickName,0+35+qrCodeBufferedImage.getWidth() + 24,y+20+30);
+            graphics2d.drawString(nickName,0+35+qrCodeBufferedImage.getWidth() + 44 + 65,y- qrCodeBufferedImage.getHeight() + 80);
             //分享标题
-            graphics2d.setPaint(new Color(34, 32, 32));
+           /* graphics2d.setPaint(new Color(34, 32, 32));
             graphics2d.setFont(font);
-            graphics2d.drawString(shareText,0+35+qrCodeBufferedImage.getWidth() + 24,y+20+20+40);
+            graphics2d.drawString(shareText,0+35+qrCodeBufferedImage.getWidth() + 24,y+20+20+40);*/
 
             graphics2d.dispose();
             // 输出新图片
@@ -491,7 +491,7 @@ public class MatrixToImageWriter {
         String qrCodeContent = "https://zs-1256645015.cos.ap-guangzhou.myqcloud.com/trace/2020/3/13/c139b00d-759f-4e8b-a2d0-ccc14db099e0.jpg";
         BufferedImage urlFile2 =
                 ImgToCircleUtil.getUrlByBufferedImage(qrCodeContent);
-        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 100, 100);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 300, 300);
         convertImageFile2 = ImgToCircleUtil.convertCircular(convertImageFile2);
         // 生成的图片位置 ( 二维码)
         String qrCodePath = FilePathUtils.getTempFilePath() + File.separator + "upQrCode.png";
