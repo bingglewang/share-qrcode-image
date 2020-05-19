@@ -564,8 +564,11 @@ public class MatrixToImageWriter {
             BufferedImage backBufferedImage = ImageIO.read(new File(backImg));
             BufferedImage qrCodeBufferedImage = ImageIO.read(new File(qrCodeImg));
 
-            int x = backBufferedImage.getWidth();
-            int y = backBufferedImage.getHeight();
+          /*  int x = backBufferedImage.getWidth();
+            int y = backBufferedImage.getHeight();*/
+
+            int x = 375;
+            int y = 375;
 
             // 输出图片宽度
             int width =  x;
