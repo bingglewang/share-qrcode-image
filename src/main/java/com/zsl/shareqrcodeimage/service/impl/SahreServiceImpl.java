@@ -293,7 +293,7 @@ public class SahreServiceImpl implements ShareService {
         // 二维码
         BufferedImage urlFile2 =
                 ImgToCircleUtil.getUrlByBufferedImage(qrCodeImg);
-        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 150, 150);
+        BufferedImage convertImageFile2 = ImgToCircleUtil.scaleByPercentage(urlFile2, 130, 130);
         convertImageFile2 = ImgToCircleUtil.convertCircular(convertImageFile2);
         // 生成的图片位置 ( 二维码)
         String imagePathFile2 = FilePathUtils.getTempFilePath() + File.separator + "upFastQrCodeProduct.png";

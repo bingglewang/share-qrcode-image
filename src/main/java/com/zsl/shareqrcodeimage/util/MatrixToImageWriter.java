@@ -450,8 +450,8 @@ public class MatrixToImageWriter {
             // 输出图片宽度
             int width =  x+40;
             int height = y + 145;
-            Font font = new Font("黑体", Font.PLAIN, 18);
-            Font font1 = new Font("黑体", Font.BOLD, 22);
+            Font font = new Font("宋体", Font.PLAIN, 18);
+            Font font1 = new Font("宋体", Font.BOLD, 22);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(255, 255, 255);
@@ -486,7 +486,7 @@ public class MatrixToImageWriter {
     }
 
 
-    public static void main(String[] args) throws Exception{
+   /* public static void main(String[] args) throws Exception{
         // 生成二维码
         String qrCodeContent = "https://zs-1256645015.cos.ap-guangzhou.myqcloud.com/trace/2020/3/13/c139b00d-759f-4e8b-a2d0-ccc14db099e0.jpg";
         BufferedImage urlFile2 =
@@ -506,10 +506,10 @@ public class MatrixToImageWriter {
         // 生成的图片位置
         String destPath = FilePathUtils.getTempFilePath() + File.separator + "upUserShare.png";
         mergeImage4(backImg,qrCodePath,nickName,shareText,destPath);
-    }
+    }*/
 
 
-  /*  public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception{
         String text = "sdfsdfsdf"; // 二维码内容
         int width = 200; // 二维码图片宽度
         int height = 200; // 二维码图片高度
@@ -546,7 +546,7 @@ public class MatrixToImageWriter {
         // 生成的图片位置
         String destPath = FilePathUtils.getTempFilePath() + File.separator + "upFastShareImg.png";
         mergeImage5(backImg,imagePath,nickName,shareText,price,productDesc,qrCodePath,destPath);
-    }*/
+    }
 
 
 
@@ -573,8 +573,8 @@ public class MatrixToImageWriter {
             // 输出图片宽度
             int width =  x;
             int height = y + 170;
-            Font font = new Font("黑体", Font.BOLD, 18);
-            Font font1 = new Font("黑体", Font.BOLD, 30);
+            Font font = new Font("宋体", Font.BOLD, 18);
+            Font font1 = new Font("宋体", Font.BOLD, 30);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(250, 250, 250);
@@ -588,7 +588,7 @@ public class MatrixToImageWriter {
             //背景图
             graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
             //二维码
-            graphics2d.drawImage(qrCodeBufferedImage, x - qrCodeBufferedImage.getWidth() - 25, y+10,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            graphics2d.drawImage(qrCodeBufferedImage, x - qrCodeBufferedImage.getWidth() - 15, y+15,qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
             //价格
             graphics2d.setPaint(new Color(91, 142, 219));
             graphics2d.setFont(font1);
@@ -596,7 +596,7 @@ public class MatrixToImageWriter {
             //商品描述
             graphics2d.setPaint(new Color(34, 32, 32));
             graphics2d.setFont(font);
-            drawString(graphics2d,font, productDesc,24,y+20+20+30,230);
+            drawString(graphics2d,font, productDesc,24,y+20+20+30,200);
 
             graphics2d.dispose();
 
