@@ -400,11 +400,11 @@ public class MatrixToImageWriter {
             //背景图
             graphics2d.drawImage(backBufferedImage, 0, 0,x,y, null);
             //二维码
-            graphics2d.drawImage(qrCodeBufferedImage, 0+50, y-40 - qrCodeBufferedImage.getHeight(),qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
+            graphics2d.drawImage(qrCodeBufferedImage, 0+150, y-40 - qrCodeBufferedImage.getHeight(),qrCodeBufferedImage.getWidth(),qrCodeBufferedImage.getHeight(), null);
             //昵称
             graphics2d.setPaint(new Color(38, 50, 137));
             graphics2d.setFont(font1);
-            graphics2d.drawString(nickName,0+35+qrCodeBufferedImage.getWidth() + 44 + 65,y- qrCodeBufferedImage.getHeight() + 80);
+            graphics2d.drawString(nickName,0+35+qrCodeBufferedImage.getWidth() + 90 + 90,y- qrCodeBufferedImage.getHeight() + 80);
             //分享标题
            /* graphics2d.setPaint(new Color(34, 32, 32));
             graphics2d.setFont(font);
@@ -450,8 +450,8 @@ public class MatrixToImageWriter {
             // 输出图片宽度
             int width =  x+40;
             int height = y + 145;
-            Font font = new Font("宋体", Font.PLAIN, 18);
-            Font font1 = new Font("宋体", Font.BOLD, 22);
+            Font font = new Font("微软雅黑", Font.PLAIN, 18);
+            Font font1 = new Font("微软雅黑", Font.PLAIN, 22);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(255, 255, 255);
@@ -573,8 +573,8 @@ public class MatrixToImageWriter {
             // 输出图片宽度
             int width =  x;
             int height = y + 170;
-            Font font = new Font("宋体", Font.BOLD, 18);
-            Font font1 = new Font("宋体", Font.BOLD, 30);
+            Font font = new Font("微软雅黑", Font.PLAIN, 18);
+            Font font1 = new Font("微软雅黑", Font.PLAIN, 30);
             BufferedImage descBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D graphics2d = (Graphics2D) descBufferedImage.getGraphics();
             Color color = new Color(250, 250, 250);
